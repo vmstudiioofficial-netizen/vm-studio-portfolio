@@ -1,0 +1,882 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VM Studio | Harsh Desai Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+      :root {
+        --bg-color: #050505;
+        --accent-color: #facc15;
+        --accent-hover: #eab308;
+        --text-primary: #ffffff;
+        --text-secondary: #a3a3a3;
+        --glass-bg: rgba(255, 255, 255, 0.03);
+        --glass-border: rgba(255, 255, 255, 0.08);
+        --glow-color: rgba(250, 204, 21, 0.15);
+        --purple-glow: rgba(139, 92, 246, 0.15);
+        --blue-glow: rgba(59, 130, 246, 0.15);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+        overflow-x: hidden;
+      }
+
+      body {
+        background: radial-gradient(circle at 50% 50%, #0d0d1a, #050505);
+        background-attachment: fixed;
+        color: var(--text-primary);
+        font-family: 'Poppins', sans-serif;
+        line-height: 1.6;
+        overflow-x: hidden;
+        position: relative;
+      }
+
+      /* Animated Background */
+      .bg-glow-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: -1;
+        overflow: hidden;
+        pointer-events: none;
+        background: radial-gradient(circle at center, rgba(13, 13, 26, 1) 0%, rgba(5, 5, 5, 1) 100%);
+      }
+
+      .glow-ball {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(150px);
+        opacity: 0.5;
+        animation: floatMove 25s infinite alternate ease-in-out;
+      }
+
+      .glow-yellow {
+        width: 600px;
+        height: 600px;
+        background: radial-gradient(circle, var(--glow-color) 0%, transparent 70%);
+        top: -150px;
+        left: -100px;
+      }
+
+      .glow-purple {
+        width: 700px;
+        height: 700px;
+        background: radial-gradient(circle, var(--purple-glow) 0%, transparent 70%);
+        bottom: -200px;
+        right: -150px;
+        animation-duration: 30s;
+        animation-delay: -5s;
+      }
+
+      .glow-blue {
+        width: 550px;
+        height: 550px;
+        background: radial-gradient(circle, var(--blue-glow) 0%, transparent 70%);
+        top: 40%;
+        left: 45%;
+        animation-duration: 22s;
+        animation-delay: -10s;
+      }
+
+      @keyframes floatMove {
+        0% { transform: translate(0, 0) scale(1); }
+        33% { transform: translate(50px, 100px) scale(1.1); }
+        66% { transform: translate(-80px, 50px) scale(0.9); }
+        100% { transform: translate(0, 0) scale(1); }
+      }
+
+      h1, h2, h3 {
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1.5rem;
+      }
+
+      section {
+        padding: 100px 0;
+      }
+
+      .glass-card {
+        background: var(--glass-bg);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid var(--glass-border);
+        border-radius: 28px;
+        padding: 3rem;
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        transition: all 0.4s ease;
+      }
+
+      .glass-card:hover {
+        border-color: rgba(250, 204, 21, 0.3);
+        box-shadow: 0 8px 32px 0 rgba(250, 204, 21, 0.1);
+      }
+
+      .accent-text {
+        color: var(--accent-color);
+      }
+
+      /* Animations */
+      .reveal {
+        opacity: 0;
+        transform: translateY(40px);
+        transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+      }
+
+      .reveal.active {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+
+      @keyframes slideUp {
+        from { transform: translateY(30px); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+      }
+
+      @keyframes float {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-15px); }
+      }
+
+      @keyframes glowPulse {
+        0%, 100% { box-shadow: 0 0 20px rgba(250, 204, 21, 0.2); }
+        50% { box-shadow: 0 0 40px rgba(250, 204, 21, 0.4); }
+      }
+
+      @keyframes shimmer {
+        0% { background-position: -200% center; }
+        100% { background-position: 200% center; }
+      }
+
+      @keyframes textGlow {
+        0%, 100% { filter: drop-shadow(0 0 8px rgba(250, 204, 21, 0.3)); }
+        50% { filter: drop-shadow(0 0 15px rgba(250, 204, 21, 0.5)); }
+      }
+
+      .fade-in { animation: fadeIn 1.2s ease-out forwards; }
+      .slide-up { animation: slideUp 1s cubic-bezier(0.23, 1, 0.32, 1) forwards; }
+
+      /* Hero Section */
+      .hero {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        position: relative;
+      }
+
+      .hero-grid {
+        display: grid;
+        grid-template-columns: 1.2fr 0.8fr;
+        gap: 4rem;
+        align-items: center;
+        padding-right: 2rem; /* Add safe space for floating icons */
+      }
+
+      .hero-content h1 {
+        font-size: clamp(3rem, 8vw, 5rem);
+        line-height: 1.1;
+        margin-bottom: 2rem;
+        padding: 0.8rem 1.8rem;
+        background: rgba(255, 255, 255, 0.03);
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 24px;
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+        display: inline-block;
+        transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        cursor: default;
+      }
+
+      .hero-content h1:hover {
+        transform: scale(1.03); /* Slightly less aggressive scale for the box */
+        border-color: rgba(250, 204, 21, 0.3);
+        box-shadow: 0 15px 40px rgba(250, 204, 21, 0.15);
+      }
+
+      .hero-content h1 .glass-text {
+        background: linear-gradient(90deg, var(--accent-color), #fff, var(--accent-color));
+        background-size: 200% auto;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: shimmer 6s linear infinite, textGlow 4s ease-in-out infinite;
+        display: inline-block;
+      }
+
+      .hero-content h1:hover .glass-text {
+        filter: drop-shadow(0 0 20px rgba(250, 204, 21, 0.6));
+      }
+
+      .hero-content .subtitle {
+        font-size: 1.5rem;
+        color: var(--accent-color);
+        margin-bottom: 1.5rem;
+        font-weight: 500;
+      }
+
+      .hero-content .description {
+        font-size: 1.125rem;
+        color: var(--text-secondary);
+        margin-bottom: 2rem;
+        max-width: 500px;
+      }
+
+      .hero-content .location {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+        margin-bottom: 2.5rem;
+      }
+
+      .btn-group {
+        display: flex;
+        gap: 1.25rem;
+      }
+
+      .btn {
+        padding: 1.1rem 2.2rem;
+        border-radius: 14px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        display: inline-block;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+      }
+
+      .btn-primary {
+        background-color: var(--accent-color);
+        color: #000;
+        border: 1px solid var(--accent-color);
+      }
+
+      .btn-primary:hover {
+        background-color: var(--accent-hover);
+        transform: translateY(-5px) scale(1.05);
+        box-shadow: 0 15px 30px rgba(250, 204, 21, 0.4);
+      }
+
+      .btn-outline {
+        border: 1px solid var(--glass-border);
+        color: var(--text-primary);
+        background: var(--glass-bg);
+      }
+
+      .btn-outline:hover {
+        background: rgba(255, 255, 255, 0.1);
+        transform: translateY(-5px) scale(1.05);
+        border-color: var(--accent-color);
+        box-shadow: 0 15px 30px rgba(255, 255, 255, 0.1);
+      }
+
+      .hero-visual {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .profile-box {
+        width: 100%;
+        max-width: 450px; /* Limit size to ensure internal icons don't hit edges */
+        aspect-ratio: 1;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .profile-img-container {
+        width: 100%;
+        height: 100%;
+        background: var(--glass-bg);
+        border: 1px solid var(--glass-border);
+        border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+        backdrop-filter: blur(20px);
+        overflow: hidden;
+        animation: glowPulse 4s infinite ease-in-out;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1;
+      }
+
+      .profile-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        pointer-events: none;
+      }
+
+      .profile-placeholder {
+        font-size: 4rem;
+        font-weight: 800;
+        color: var(--accent-color);
+        opacity: 0.5;
+        z-index: 2;
+      }
+
+      .floating-icon {
+        position: absolute;
+        width: 60px;
+        height: 60px;
+        background: var(--glass-bg);
+        border: 1px solid var(--glass-border);
+        backdrop-filter: blur(10px);
+        border-radius: 15px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 0.8rem;
+        font-weight: 700;
+        animation: float 3s infinite ease-in-out;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        padding: 5px;
+        text-align: center;
+        z-index: 10;
+      }
+
+      .icon-ps { 
+        top: 0; 
+        left: -10px; 
+        animation-delay: 0s; 
+        color: #31A8FF; 
+        background: rgba(0, 24, 46, 0.5);
+        border: 2px solid #31A8FF;
+        box-shadow: 0 0 15px rgba(49, 168, 255, 0.3);
+      }
+      .icon-ae { 
+        top: 20%; 
+        right: -20px; 
+        animation-delay: 0.5s; 
+        color: #9999FF; 
+        background: rgba(28, 0, 77, 0.5);
+        border: 2px solid #9999FF;
+        box-shadow: 0 0 15px rgba(153, 153, 255, 0.3);
+      }
+      .icon-pr { 
+        bottom: 10%; 
+        left: 0; 
+        animation-delay: 1s; 
+        color: #9437FF; 
+        background: rgba(45, 0, 77, 0.5);
+        border: 2px solid #9437FF;
+        box-shadow: 0 0 15px rgba(148, 55, 255, 0.3);
+      }
+      .icon-cc { 
+        bottom: -10px; 
+        right: 20%; 
+        animation-delay: 1.5s; 
+        color: #ffffff; 
+        background: rgba(255, 255, 255, 0.1);
+        border: 2px solid rgba(255, 255, 255, 0.5);
+        box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+      }
+
+      /* About Section */
+      .about-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .section-title {
+        font-size: 2.5rem;
+        margin-bottom: 2.5rem;
+        position: relative;
+        display: inline-block;
+      }
+
+      .section-title::after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 0;
+        width: 60px;
+        height: 4px;
+        background: var(--accent-color);
+        border-radius: 2px;
+      }
+
+      .about-content p {
+        color: var(--text-secondary);
+        margin-bottom: 1.5rem;
+        font-size: 1.1rem;
+        white-space: pre-line;
+      }
+
+      /* Services Section */
+      .services-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+      }
+
+      .service-card {
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      }
+
+      .service-card:hover {
+        transform: translateY(-10px) scale(1.02);
+        background: rgba(255, 255, 255, 0.08);
+        border-color: var(--accent-color);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+      }
+
+      .service-card h3 {
+        font-size: 1.75rem;
+        margin-bottom: 1.5rem;
+        color: var(--accent-color);
+      }
+
+      .service-list {
+        list-style: none;
+      }
+
+      .service-list li {
+        margin-bottom: 0.75rem;
+        padding-left: 1.5rem;
+        position: relative;
+        color: var(--text-secondary);
+      }
+
+      .service-list li::before {
+        content: '→';
+        position: absolute;
+        left: 0;
+        color: var(--accent-color);
+      }
+
+      /* Work Section Updated */
+      .work-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2rem;
+      }
+
+      .work-item {
+        position: relative;
+        aspect-ratio: 4/5;
+        border-radius: 20px;
+        overflow: hidden;
+        cursor: pointer;
+        display: block;
+        background: #111;
+        border: 1px solid var(--glass-border);
+      }
+
+      .work-placeholder {
+        width: 100%;
+        height: 100%;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), filter 0.6s ease;
+        filter: blur(4px) brightness(0.6);
+      }
+
+      .work-item:hover .work-placeholder {
+        transform: scale(1.1);
+        filter: blur(0px) brightness(0.8);
+      }
+
+      .work-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(to bottom, transparent 40%, rgba(0,0,0,0.8));
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        align-items: center;
+        padding-bottom: 2rem;
+        opacity: 1; /* Always visible but subtle */
+        transition: all 0.4s ease;
+      }
+
+      .work-title-glass {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 0.75rem 1.5rem;
+        border-radius: 12px;
+        color: #fff;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        text-align: center;
+        width: 80%;
+        transition: all 0.4s ease;
+      }
+
+      .work-overlay span {
+        color: var(--accent-color);
+        font-weight: 700;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1rem;
+        opacity: 0;
+        transform: translateY(10px);
+        transition: all 0.4s ease;
+      }
+
+      .work-item:hover .work-overlay {
+        background: rgba(0,0,0,0.4);
+      }
+
+      .work-item:hover .work-title-glass {
+        color: var(--accent-color);
+        box-shadow: 0 0 20px var(--glow-color);
+        background: rgba(255, 255, 255, 0.15);
+      }
+
+      .work-item:hover .work-overlay span {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* Contact Section */
+      .contact-card {
+        text-align: center;
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      .contact-card p {
+        font-size: 1.25rem;
+        color: var(--text-secondary);
+        margin-bottom: 2.5rem;
+      }
+
+      .contact-footer-text {
+        animation: fadeIn 2s ease-out forwards;
+      }
+
+      .contact-details {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2rem;
+        margin-bottom: 3rem;
+      }
+
+      .contact-info-item {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      .info-label {
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--accent-color);
+      }
+
+      .info-value {
+        font-size: 1rem;
+        font-weight: 500;
+      }
+
+      /* Footer */
+      footer {
+        padding: 50px 0;
+        border-top: 1px solid var(--glass-border);
+        text-align: center;
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+      }
+
+      /* Responsive */
+      @media (max-width: 991px) {
+        .hero-grid {
+          grid-template-columns: 1fr;
+          text-align: center;
+          gap: 5rem;
+          padding-right: 0;
+          padding-left: 0;
+        }
+
+        .hero-content {
+          order: 2;
+        }
+
+        .hero-content .description, .hero-content .location {
+          margin-left: auto;
+          margin-right: auto;
+        }
+
+        .btn-group {
+          justify-content: center;
+        }
+
+        .hero-visual {
+          order: 1;
+          max-width: 400px;
+          margin: 0 auto;
+        }
+
+        .work-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .contact-details {
+          grid-template-columns: 1fr;
+          gap: 1.5rem;
+        }
+      }
+
+      @media (max-width: 640px) {
+        .work-grid, .services-grid {
+          grid-template-columns: 1fr;
+        }
+        
+        .hero-content h1 {
+          font-size: 3rem;
+        }
+
+        .btn-group {
+          flex-direction: column;
+        }
+
+        .btn {
+          width: 100%;
+        }
+
+        section {
+          padding: 60px 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="bg-glow-container">
+      <div class="glow-ball glow-yellow"></div>
+      <div class="glow-ball glow-purple"></div>
+      <div class="glow-ball glow-blue"></div>
+    </div>
+
+    <div class="container">
+      
+      <!-- HERO SECTION -->
+      <section class="hero" id="home">
+        <div class="hero-grid">
+          <div class="hero-content slide-up">
+            <h1 class="fade-in"><span class="glass-text">VM Studio</span></h1>
+            <div class="subtitle">Graphic Designer & Motion Video Editor</div>
+            <p class="description">
+              I’m Harsh Desai, a creative designer and video editor helping brands and creators stand out with high-quality visuals and engaging content.
+            </p>
+            <div class="location">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+              Ahmedabad, Gujarat, India
+            </div>
+            <div class="btn-group">
+              <a href="#work" class="btn btn-primary">View My Work</a>
+              <a href="#contact" class="btn btn-outline">Contact Me</a>
+            </div>
+          </div>
+          
+          <div class="hero-visual fade-in" style="animation-delay: 0.3s;">
+            <div class="profile-box">
+              <div class="profile-img-container">
+                <img src="https://plain-apac-prod-public.komododecks.com/202604/24/wPRbQDWMFp18TzTCHQZ4/image.jpg" alt="Harsh Desai" class="profile-img" referrerPolicy="no-referrer">
+              </div>
+              <!-- Floating Icons -->
+              <div class="floating-icon icon-ps">Ps</div>
+              <div class="floating-icon icon-ae">Ae</div>
+              <div class="floating-icon icon-pr">Pr</div>
+              <div class="floating-icon icon-cc">CapCut</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ABOUT SECTION -->
+      <section id="about" class="reveal">
+        <div class="glass-card about-grid">
+          <h2 class="section-title">About Me</h2>
+          <div class="about-content">
+            <p>Hi, I’m <strong>Harsh Desai</strong>, the founder of <strong>VM Studio</strong>, based in Ahmedabad, Gujarat. I’m a passionate and professional Graphic Designer and Motion Video Editor with over 1.3 years of freelance experience.</p>
+            
+            <p>Currently, I’m pursuing my Bachelor of Computer Applications (2023–2026), which helps me combine technical knowledge with creative skills to deliver high-quality visual content.</p>
+
+            <p>Through my own brand, VM Studio, I have worked with a variety of clients, creating eye-catching posters, social media designs, and engaging video content. My work focuses on delivering visually appealing designs that help brands stand out and connect with their audience.</p>
+
+            <p>In addition to freelancing, I am also working remotely with a private company, <strong>Universal Property</strong>, where I specialize in video editing and reel cover design. This experience has helped me improve my consistency, creativity, and understanding of client requirements in a professional work environment.</p>
+
+            <p>I am skilled in tools like Adobe Photoshop, After Effects, Premiere Pro, and CapCut, which allow me to create high-quality designs and motion visuals.</p>
+
+            <p>My goal is to deliver creative, impactful, and high-quality work that helps brands grow, attract attention, and leave a strong impression.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- SERVICES SECTION -->
+      <section id="services" class="reveal">
+        <h2 class="section-title">What I Do</h2>
+        <div class="services-grid">
+          <!-- Graphic Design -->
+          <div class="glass-card service-card" style="transition-delay: 0.1s;">
+            <h3>Graphic Design</h3>
+            <ul class="service-list">
+              <li>Social Media Posts</li>
+              <li>Posters (Devotional, Song, Movie)</li>
+              <li>YouTube Thumbnails</li>
+              <li>Branding Content</li>
+            </ul>
+          </div>
+          <!-- Video Editing -->
+          <div class="glass-card service-card" style="transition-delay: 0.2s;">
+            <h3>Video Editing</h3>
+            <ul class="service-list">
+              <li>YouTube Videos</li>
+              <li>Instagram Reels</li>
+              <li>Ads & Marketing Videos</li>
+              <li>Motion Graphics Videos</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- WORK / PORTFOLIO SECTION -->
+      <section id="work" class="reveal">
+        <h2 class="section-title">My Work</h2>
+        <div class="work-grid">
+          <!-- Work item 1 -->
+          <a href="posters.html" class="work-item" style="transition-delay: 0.1s;">
+            <div class="work-placeholder" style="background-image: url('https://i.ibb.co/Z6TDnZQ8/Het-BHUVAJI-poster-02-by-vm-studiio.jpg');"></div>
+            <div class="work-overlay">
+              <div class="work-title-glass">Client Posters</div>
+              <span>View Project</span>
+            </div>
+          </a>
+          <!-- Work item 2 -->
+          <a href="manipulation.html" class="work-item" style="transition-delay: 0.2s;">
+            <div class="work-placeholder" style="background-image: url('https://i.ibb.co/hFNxNK0J/From-Klick-Pin-CF-Save-Must-save-clean-girl-makeup-looks-for-your-next-inspiration-board-with-enough.jpg');"></div>
+            <div class="work-overlay">
+              <div class="work-title-glass">Product Manipulation</div>
+              <span>View Project</span>
+            </div>
+          </a>
+          <!-- Work item 3 -->
+          <a href="social.html" class="work-item" style="transition-delay: 0.3s;">
+            <div class="work-placeholder" style="background-image: url('https://i.ibb.co/tpM2vw1m/From-Klick-Pin-CF-8-Beautiful-simple-dessert-ideas-that-are-worth-saving-if-you-love-elegant-details.jpg');"></div>
+            <div class="work-overlay">
+              <div class="work-title-glass">Social Media Posts</div>
+              <span>View Project</span>
+            </div>
+          </a>
+          <!-- Work item 4 -->
+          <a href="reels.html" class="work-item" style="transition-delay: 0.4s;">
+            <div class="work-placeholder" style="background-image: url('https://i.ibb.co/GQH395xW/my-4.jpg');"></div>
+            <div class="work-overlay">
+              <div class="work-title-glass">Reel Covers</div>
+              <span>View Project</span>
+            </div>
+          </a>
+          <!-- Work item 5 -->
+          <a href="shortvideos.html" class="work-item" style="transition-delay: 0.5s;">
+            <div class="work-placeholder" style="background-image: url('https://i.ibb.co/JRxskbng/my-5.jpg');"></div>
+            <div class="work-overlay">
+              <div class="work-title-glass">Short Videos</div>
+              <span>View Project</span>
+            </div>
+          </a>
+          <!-- Work item 6 -->
+          <a href="motion.html" class="work-item" style="transition-delay: 0.6s;">
+            <div class="work-placeholder" style="background-image: url('https://i.ibb.co/7xZhRSXg/krzystztof-iwanski-1.gif');"></div>
+            <div class="work-overlay">
+              <div class="work-title-glass">Motion Graphics Videos</div>
+              <span>View Project</span>
+            </div>
+          </a>
+        </div>
+      </section>
+
+      <!-- CONTACT SECTION -->
+      <section id="contact" class="reveal">
+        <div class="glass-card contact-card">
+          <h2 class="section-title">Let’s Work Together</h2>
+          <p>Have a project in mind? Let’s create something amazing together.</p>
+          
+          <div class="contact-details">
+            <div class="contact-info-item">
+              <span class="info-label">Email</span>
+              <span class="info-value">vmstudiioofficial@gmail.com</span>
+            </div>
+            <div class="contact-info-item">
+              <span class="info-label">Phone</span>
+              <span class="info-value">+91 70433 48189</span>
+            </div>
+            <div class="contact-info-item">
+              <span class="info-label">Instagram</span>
+              <span class="info-value">@v.m_studiio</span>
+            </div>
+          </div>
+          
+          <div class="btn-group" style="justify-content: center; margin-top: 2.5rem; flex-wrap: wrap;">
+            <a href="mailto:vmstudiioofficial@gmail.com?subject=Project%20Inquiry&body=Hello%20VM%20Studio,%20I%20would%20like%20to%20work%20with%20you." class="btn btn-outline" style="backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2);">Send Email</a>
+            <a href="https://wa.me/917043348189?text=Hello%20I%20want%20to%20work%20with%20you" target="_blank" class="btn btn-primary" style="backdrop-filter: blur(10px);">Chat on WhatsApp</a>
+            <a href="https://www.instagram.com/v.m_studiio/" target="_blank" class="btn btn-outline" style="backdrop-filter: blur(10px);">Message on Instagram</a>
+          </div>
+          
+          <p class="contact-footer-text" style="margin-top: 2rem; color: #a3a3a3; font-size: 0.95rem; opacity: 0.8;">
+            Contact Today and Let’s Build Something Amazing
+          </p>
+        </div>
+      </section>
+
+      <!-- FOOTER -->
+      <footer>
+        <p>© 2026 VM Studio | Harsh Desai</p>
+      </footer>
+
+    </div>
+
+    <script>
+      // Scroll Reveal Animation
+      function reveal() {
+        var reveals = document.querySelectorAll(".reveal");
+        for (var i = 0; i < reveals.length; i++) {
+          var windowHeight = window.innerHeight;
+          var elementTop = reveals[i].getBoundingClientRect().top;
+          var elementVisible = 150;
+          if (elementTop < windowHeight - elementVisible) {
+            reveals[i].classList.add("active");
+          }
+        }
+      }
+      window.addEventListener("scroll", reveal);
+      // Run once on load
+      reveal();
+    </script>
+  </body>
+</html>
+

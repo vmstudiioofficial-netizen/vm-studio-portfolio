@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Motion Graphics Videos | VM Studio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+      :root {
+        --bg-color: #050505;
+        --accent-color: #facc15;
+        --text-primary: #ffffff;
+        --text-secondary: #a3a3a3;
+        --glass-bg: rgba(255, 255, 255, 0.03);
+        --glass-border: rgba(255, 255, 255, 0.08);
+        --glow-color: rgba(250, 204, 21, 0.15);
+        --purple-glow: rgba(139, 92, 246, 0.15);
+        --blue-glow: rgba(59, 130, 246, 0.15);
+      }
+
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body {
+        background: radial-gradient(circle at 50% 50%, #0d0d1a, #050505);
+        background-attachment: fixed;
+        color: var(--text-primary);
+        font-family: 'Poppins', sans-serif;
+        overflow-x: hidden;
+        position: relative;
+      }
+
+      /* Animated Background */
+      .bg-glow-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: -1;
+        overflow: hidden;
+        pointer-events: none;
+        background: radial-gradient(circle at center, rgba(13, 13, 26, 1) 0%, rgba(5, 5, 5, 1) 100%);
+      }
+
+      .glow-ball {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(150px);
+        opacity: 0.5;
+        animation: floatMove 25s infinite alternate ease-in-out;
+      }
+
+      .glow-yellow {
+        width: 600px;
+        height: 600px;
+        background: radial-gradient(circle, var(--glow-color) 0%, transparent 70%);
+        top: -150px;
+        left: -100px;
+      }
+
+      .glow-purple {
+        width: 700px;
+        height: 700px;
+        background: radial-gradient(circle, var(--purple-glow) 0%, transparent 70%);
+        bottom: -200px;
+        right: -150px;
+        animation-duration: 30s;
+        animation-delay: -5s;
+      }
+
+      .glow-blue {
+        width: 550px;
+        height: 550px;
+        background: radial-gradient(circle, var(--blue-glow) 0%, transparent 70%);
+        top: 40%;
+        left: 45%;
+        animation-duration: 22s;
+        animation-delay: -10s;
+      }
+
+      @keyframes floatMove {
+        0% { transform: translate(0, 0) scale(1); }
+        33% { transform: translate(50px, 100px) scale(1.1); }
+        66% { transform: translate(-80px, 50px) scale(0.9); }
+        100% { transform: translate(0, 0) scale(1); }
+      }
+
+      .container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 4rem;
+        padding-top: 2rem;
+      }
+
+      .btn-back {
+        padding: 0.75rem 1.5rem;
+        border: 1px solid var(--glass-border);
+        border-radius: 12px;
+        color: var(--text-primary);
+        text-decoration: none;
+        background: var(--glass-bg);
+        backdrop-filter: blur(10px);
+        transition: all 0.3s ease;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .btn-back:hover {
+        background: var(--accent-color);
+        color: #000;
+        transform: scale(1.05);
+      }
+
+      h1 { font-family: 'Montserrat', sans-serif; font-size: 2.5rem; }
+
+      /* Video Grid Layout */
+      .video-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+        gap: 3rem;
+        padding-bottom: 4rem;
+      }
+
+      @media (max-width: 768px) {
+        .video-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* Responsive Video Container */
+      .video-container {
+        width: 100%;
+        margin: auto;
+        background: var(--glass-bg);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-radius: 28px;
+        overflow: hidden;
+        border: 1px solid var(--glass-border);
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        display: flex;
+        flex-direction: column;
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+      }
+
+      .video-container:hover {
+        transform: translateY(-15px) scale(1.02);
+        box-shadow: 0 20px 40px rgba(250, 204, 21, 0.15);
+        border-color: var(--accent-color);
+      }
+
+      /* iFrame sizing handled by aspect-ratio */
+      .video-wrapper {
+        width: 100%;
+        position: relative;
+        background: #000;
+      }
+
+      /* Default behavior for horizontal videos */
+      .video-wrapper.horizontal iframe {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 16/9;
+        display: block;
+      }
+
+      /* Behavior for vertical videos (Reels/Shorts format) */
+      .video-wrapper.vertical {
+        max-width: 320px;
+        margin: 0 auto;
+      }
+      .video-wrapper.vertical iframe {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 9/16;
+        display: block;
+      }
+
+      iframe {
+        border: none;
+      }
+
+      .video-info {
+        padding: 1.5rem;
+        border-top: 1px solid var(--glass-border);
+      }
+
+      .video-info h3 {
+        color: var(--accent-color);
+        margin-bottom: 0.5rem;
+        font-size: 1.1rem;
+      }
+
+      .video-info p {
+        color: var(--text-secondary);
+        font-size: 0.85rem;
+        line-height: 1.6;
+      }
+
+      .fade-in { animation: fadeIn 1s ease-out forwards; }
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="bg-glow-container">
+      <div class="glow-ball glow-yellow"></div>
+      <div class="glow-ball glow-purple"></div>
+      <div class="glow-ball glow-blue"></div>
+    </div>
+
+    <div class="container fade-in">
+      <header class="header">
+        <h1>Motion Graphics <span style="color:var(--accent-color)">Videos</span></h1>
+        <a href="index.html#work" class="btn-back">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+          Back to My Work
+        </a>
+      </header>
+
+      <div class="video-grid">
+        <div class="video-container">
+          <div class="video-wrapper vertical">
+             <iframe id="videoMotion1" src="https://www.youtube.com/embed/u0FoQeWMt2U?enablejsapi=1" title="Motion Project 1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+          </div>
+          <div class="video-info">
+            <h3>Creative Motion Design</h3>
+            <p>Dynamic movement and visual rhythm for impactful storytelling.</p>
+          </div>
+        </div>
+
+        <div class="video-container">
+          <div class="video-wrapper vertical">
+             <iframe id="videoMotion2" src="https://www.youtube.com/embed/x5Dw3U1DYGI?enablejsapi=1" title="Motion Project 2" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+          </div>
+          <div class="video-info">
+            <h3>Visual Effects Showcase</h3>
+            <p>Engaging visual effects and sleek animations for modern brands.</p>
+          </div>
+        </div>
+
+        <div class="video-container">
+          <div class="video-wrapper vertical">
+             <iframe id="videoMotion3" src="https://www.youtube.com/embed/rqt6XECHupQ?enablejsapi=1" title="Motion Project 3" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+          </div>
+          <div class="video-info">
+            <h3>Brand Identity Motion</h3>
+            <p>Bringing brands to life through fluid motion and professional design.</p>
+          </div>
+        </div>
+
+        <div class="video-container">
+          <div class="video-wrapper vertical">
+             <iframe id="videoMotion4" src="https://www.youtube.com/embed/iqwMUMTxtxM?enablejsapi=1" title="Motion Project 4" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+          </div>
+          <div class="video-info">
+            <h3>Animated Typography</h3>
+            <p>Clean typography and bold motion graphics for clear communication.</p>
+          </div>
+        </div>
+
+        <div class="video-container">
+          <div class="video-wrapper vertical">
+             <iframe id="videoMotion5" src="https://www.youtube.com/embed/nA-jmYoLlO8?enablejsapi=1" title="Motion Project 5" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+          </div>
+          <div class="video-info">
+            <h3>Cinematic Visuals</h3>
+            <p>Captivating cinematic motion graphics optimized for all platforms.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <script>
+      let players = [];
+      function onYouTubeIframeAPIReady() {
+        const iframes = document.querySelectorAll('iframe');
+        iframes.forEach((iframe, index) => {
+          players.push(new YT.Player(iframe.id, {
+            events: {
+              'onStateChange': (event) => onPlayerStateChange(event, index)
+            }
+          }));
+        });
+      }
+
+      function onPlayerStateChange(event, currentIndex) {
+        if (event.data === 1) { // 1 = playing
+          players.forEach((player, index) => {
+            if (index !== currentIndex) {
+              try {
+                if (player.getPlayerState() === 1) {
+                  player.pauseVideo();
+                }
+              } catch (e) {}
+            }
+          });
+        }
+      }
+    </script>
+  </body>
+</html>
